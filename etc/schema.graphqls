@@ -1,0 +1,32 @@
+type Query {
+    vendorlist: [vendorlist] @resolver(class: "Codilar\\VendorGraphQl\\Model\\Resolver\\VendorList") @doc(description: "The vendorlist query returns information about a vendor")
+    productCollection(
+        id: Int @doc(description: "To get Product Id")
+    ): ProductCollection @resolver(class:   "Codilar\\VendorGraphQl\\Model\\Resolver\\ProductsResolver")      @doc(description: "Get Product collection of a store")
+
+    VendorProductCollection(
+        id: Int @doc(description: "To get Product Id")
+        pageSize: Int = 20 @doc(description: "Specifies the maximum number of results to return at once. This attribute is optional."),
+        currentPage: Int = 1 @doc(description: "Specifies which page of results to return. The default value is 1."),
+    ): Products @resolver(class:   "Codilar\\VendorGraphQl\\Model\\Resolver\\ProductVendorResolver")      @doc(description: "Get Product collection of a store")
+
+}
+
+type ProductCollection @doc(description: "product collection") {
+    allProducts: [ProductRecord] @doc(description: "Product records with sku,name and price")
+}
+
+}
+type ProductRecord {
+    id: Int @doc(description: "To get Product Id")
+    sku: String @doc(description: "To get Product sku")
+    name: String @doc(description: "To get Product name")
+    price: Float @doc(description: "To get Product price")
+    vendor_dropdown: Int @doc(description: "To get Product Id")
+}
+
+type vendorlist @doc(description: "vendorlist defines the vendor name and other related details") {
+    id: Int
+    name: String
+    description: String
+}
